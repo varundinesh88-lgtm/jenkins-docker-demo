@@ -11,6 +11,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
+                    // Build the Docker image
                     def dockerImage = docker.build("jenkins-demo-app")
                 }
             }
@@ -19,7 +20,11 @@ pipeline {
         stage('Run Container') {
             steps {
                 script {
-                    sh "docker run -d -p 8081:8080 jenkins-demo-app"
+                    // Stop and remove any existing container first
+                    sh "docker rm -f jenkins-demo-app || true"
+                    
+                    // Run the container in detached mode with a port that matches security group
+                    sh "docker run -d --name jenkins-demo-app -p 8081:8080 jenkins-demo-app tail -f /dev/null"
                 }
             }
         }
