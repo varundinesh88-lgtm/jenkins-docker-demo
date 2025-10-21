@@ -11,8 +11,14 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Build the Docker image
-                    def dockerImage = docker.build("jenkins-demo-app")
+                    echo "Cleaning up old containers and images..."
+                    sh '''
+                    docker rm -f jenkins-demo-app || true
+                    docker rmi -f jenkins-demo-app || true
+                    '''
+                    
+                    echo "Building new Docker image..."
+                    sh 'docker build -t jenkins-demo-app .'
                 }
             }
         }
@@ -20,11 +26,17 @@ pipeline {
         stage('Run Container') {
             steps {
                 script {
-                    // Stop and remove any existing container first
-                    sh "docker rm -f jenkins-demo-app || true"
-                    
-                    // Run the container in detached mode with a port that matches security group
-                    sh "docker run -d --name jenkins-demo-app -p 8081:8080 jenkins-demo-app"
+                    echo "Starting container on port 8081..."
+                    sh 'docker run -d --name jenkins-demo-app -p 8081:8080 jenkins-demo-app'
+                }
+            }
+        }
+
+        stage('Post-Build Info') {
+            steps {
+                script {
+                    sh 'docker ps'
+                    echo "Access your app at: http://<EC2_PUBLIC_IP>:8081"
                 }
             }
         }
