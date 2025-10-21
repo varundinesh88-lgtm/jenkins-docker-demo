@@ -62,7 +62,21 @@ pipeline {
                 }
             }
         }
-    }
+        stage('Deploy to ECS Fargate') {
+            steps {
+                script {
+                    sh '''
+                     aws ecs update-service \
+                     --cluster jenkins-demo-cluster \
+                     --service jenkins-demo-service \
+                     --force-new-deployment \
+                     --region us-east-1
+                     '''
+                }
+            }
+        }
+
+   }
 
     post {
         always {
