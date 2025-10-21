@@ -24,7 +24,7 @@ pipeline {
                     sh "docker rm -f jenkins-demo-app || true"
                     
                     // Run the container in detached mode with a port that matches security group
-                    sh "docker run -d --name jenkins-demo-app -p 8081:8080 jenkins-demo-app python3 -m http.server 8080"
+                    sh "docker run -d --name jenkins-demo-app -p 8081:8080 jenkins-demo-app"
                 }
             }
         }
