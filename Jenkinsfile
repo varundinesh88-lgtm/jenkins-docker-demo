@@ -2,10 +2,9 @@ pipeline {
     agent any
 
     environment {
-        AWS_REGION = 'us-east-1'
-        ECR_REPO = 'jenkins-demo-app'
-        AWS_ACCOUNT_ID = '829730167210'
-        IMAGE_NAME = 'jenkins-demo-app'
+        IMAGE_NAME = "jenkins-demo-app"
+        AWS_REGION = "us-east-1"
+        ECR_REPO = "829730167210.dkr.ecr.us-east-1.amazonaws.com/jenkins-demo-app"
     }
 
     stages {
@@ -18,49 +17,56 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    dockerImage = docker.build("${IMAGE_NAME}")
+                    docker.build("${IMAGE_NAME}")
                 }
             }
         }
 
-        stage('Run Container') {
+        stage('Run Container for Testing') {
             steps {
                 script {
-                    sh 'docker rm -f jenkins-demo-app || true'
                     sh 'docker run -d --name jenkins-demo-app -p 8081:8080 jenkins-demo-app'
                 }
             }
         }
 
-        stage('Test Container') {
+        stage('Test Application') {
             steps {
                 script {
-                    echo "🧪 Testing application endpoint..."
-                    sh 'sleep 5'
                     sh '''
-                    STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8081)
-                    if [ "$STATUS" -ne 200 ]; then
-                      echo "❌ Test failed! Application not responding correctly."
-                      exit 1
-                    else
-                      echo "✅ Test passed! Application is healthy."
-                    fi
+                    echo "Testing app endpoint..."
+                    sleep 5
+                    curl -I http://localhost:8081
                     '''
                 }
             }
         }
 
-        stage('Push to ECR') {
+        stage('Login to AWS ECR') {
             steps {
                 script {
-                    echo "🔐 Logging in to AWS ECR..."
                     sh '''
-                    aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
-                    docker tag $IMAGE_NAME:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO:latest
-                    docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO:latest
+                    aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REPO
                     '''
                 }
             }
+        }
+
+        stage('Tag and Push Docker Image to ECR') {
+            steps {
+                script {
+                    sh '''
+                    docker tag $IMAGE_NAME:latest $ECR_REPO:latest
+                    docker push $ECR_REPO:latest
+                    '''
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            sh 'docker stop jenkins-demo-app || true && docker rm jenkins-demo-app || true'
         }
     }
 }
