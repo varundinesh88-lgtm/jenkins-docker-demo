@@ -11,7 +11,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    dockerImage = docker.build("jenkins-demo-app")
+                    def dockerImage = docker.build("jenkins-demo-app")
                 }
             }
         }
@@ -19,7 +19,7 @@ pipeline {
         stage('Run Container') {
             steps {
                 script {
-                    dockerImage.run('-d -p 8081:8080')
+                    sh "docker run -d -p 8081:8080 jenkins-demo-app"
                 }
             }
         }
