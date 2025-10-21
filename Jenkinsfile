@@ -1,6 +1,13 @@
 pipeline {
     agent any
 
+    environment {
+        AWS_REGION = 'us-east-1'
+        ECR_REPO = 'jenkins-demo-app'
+        AWS_ACCOUNT_ID = '829730167210'
+        IMAGE_NAME = 'jenkins-demo-app'
+    }
+
     stages {
         stage('Clone Repository') {
             steps {
@@ -11,7 +18,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    dockerImage = docker.build("jenkins-demo-app")
+                    dockerImage = docker.build("${IMAGE_NAME}")
                 }
             }
         }
@@ -38,6 +45,19 @@ pipeline {
                     else
                       echo "✅ Test passed! Application is healthy."
                     fi
+                    '''
+                }
+            }
+        }
+
+        stage('Push to ECR') {
+            steps {
+                script {
+                    echo "🔐 Logging in to AWS ECR..."
+                    sh '''
+                    aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+                    docker tag $IMAGE_NAME:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO:latest
+                    docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO:latest
                     '''
                 }
             }
