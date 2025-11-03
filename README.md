@@ -69,13 +69,16 @@ _**Output / Screenshots**_
 
   <img width="1920" height="1080" alt="Jenkins1" src="https://github.com/user-attachments/assets/cc8f7929-ca7f-43e5-9958-edc2d70fb259" />
 
+
 •	Docker image listed in ECR
 
   <img width="1920" height="1080" alt="6" src="https://github.com/user-attachments/assets/87a67347-8ea7-4649-b891-17ad0225221c" />
 
+
 •	ECS Fargate running task
 
   <img width="1920" height="1080" alt="5" src="https://github.com/user-attachments/assets/ee8edda3-4c46-4b45-83d1-19dd7290004d" />
+
 
 •	App running in browser 
 
