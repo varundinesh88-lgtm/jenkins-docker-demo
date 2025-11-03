@@ -10,10 +10,10 @@ Objective: Automate build, test, and deployment of a sample application using Je
 **Architecture Diagram**
 
 GitHub Repo --> Jenkins Pipeline --> Docker Build --> ECR Repository  --> ECS Fargate Task --> Public App Endpoint
-•	Jenkins automatically triggers on GitHub push via webhook.
-•	Docker image is built and pushed to AWS ECR.
-•	ECS Fargate pulls the image and runs the container.
-•	App is publicly accessible on assigned port.
+* Jenkins automatically triggers on GitHub push via webhook.
+* Docker image is built and pushed to AWS ECR.
+* ECS Fargate pulls the image and runs the container.
+* App is publicly accessible on assigned port.
 
 
 **Tools & Services Used**
