@@ -33,11 +33,11 @@ GitHub Repo --> Jenkins Pipeline --> Docker Build --> ECR Repository  --> ECS Fa
 
 **Pipeline Stages**
 
-Stage 1 – Checkout Code: Pull code from GitHub repository using SSH key.
-Stage 2 – Build Docker Image: Build Docker container from Dockerfile.
-Stage 3 – Push to AWS ECR: Authenticate and push Docker image.
-Stage 4 – Deploy to ECS Fargate: ECS Task Definition configured and service started.
-Stage 5 – Test: Verify app is reachable and serving correct content.
+* Stage 1 – Checkout Code: Pull code from GitHub repository using SSH key.
+* Stage 2 – Build Docker Image: Build Docker container from Dockerfile.
+* Stage 3 – Push to AWS ECR: Authenticate and push Docker image.
+* Stage 4 – Deploy to ECS Fargate: ECS Task Definition configured and service started.
+*  Stage 5 – Test: Verify app is reachable and serving correct content.
 
 
 **Key Implementation Steps**
@@ -52,10 +52,10 @@ Stage 5 – Test: Verify app is reachable and serving correct content.
 **Challenges & Solutions**
 
 Challenge	 -  Solution
-Permission denied for Docker socket  - 	Ran Jenkins as user in Docker group and used sudo.
-GitHub access issues  - 	Used SSH method. SSH key added to GitHub and Jenkins credentials.
-Webhook not triggering  -	 Corrected webhook URL and Jenkins GitHub plugin configuration.
-Build failing in Jenkins  -	 Verified Dockerfile syntax, environment variables, and user permissions.
+* Permission denied for Docker socket  - 	Ran Jenkins as user in Docker group and used sudo.
+* GitHub access issues  - 	Used SSH method. SSH key added to GitHub and Jenkins credentials.
+* Webhook not triggering  -	 Corrected webhook URL and Jenkins GitHub plugin configuration.
+* Build failing in Jenkins  -	 Verified Dockerfile syntax, environment variables, and user permissions.
 
 
 **Output / Screenshots**
