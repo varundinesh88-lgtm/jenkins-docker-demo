@@ -2,12 +2,12 @@
 ***Jenkins-Docker***
 
 
-**Overview**
+_**Overview**_
 
 Objective: Automate build, test, and deployment of a sample application using Jenkins, Docker, AWS ECR, and ECS Fargate. Skills Demonstrated: CI/CD, Docker, AWS (ECR, ECS Fargate), GitHub integration, automation scripting.
 
 
-**Architecture Diagram**
+_**Architecture Diagram**_
 
 GitHub Repo --> Jenkins Pipeline --> Docker Build --> ECR Repository  --> ECS Fargate Task --> Public App Endpoint
 * Jenkins automatically triggers on GitHub push via webhook.
@@ -16,22 +16,17 @@ GitHub Repo --> Jenkins Pipeline --> Docker Build --> ECR Repository  --> ECS Fa
 * App is publicly accessible on assigned port.
 
 
-**Tools & Services Used**
+_**Tools & Services Used**_
 
-•  Jenkins – CI/CD automation server
-
-•  Docker – Containerization of the app
-
-•  GitHub – Source control and webhook trigger
-
-•  AWS ECR – Docker image registry
-
-•  AWS ECS Fargate – Serverless container deployment
-
-•  AWS CLI – Command-line operations for AWS resources
+* Jenkins – CI/CD automation server
+* Docker – Containerization of the app
+* GitHub – Source control and webhook trigger
+* AWS ECR – Docker image registry
+* AWS ECS Fargate – Serverless container deployment
+* AWS CLI – Command-line operations for AWS resources
 
 
-**Pipeline Stages**
+_**Pipeline Stages**_
 
 * Stage 1 – Checkout Code: Pull code from GitHub repository using SSH key.
 * Stage 2 – Build Docker Image: Build Docker container from Dockerfile.
@@ -40,7 +35,7 @@ GitHub Repo --> Jenkins Pipeline --> Docker Build --> ECR Repository  --> ECS Fa
 *  Stage 5 – Test: Verify app is reachable and serving correct content.
 
 
-**Key Implementation Steps**
+_**Key Implementation Steps**_
 
 1.	EC2 Setup: Launch Jenkins EC2 instance (t3.micro, free tier), installed Jenkins and Docker, configured security groups.
 2.	Jenkins Setup: Installed Git, Pipeline, Docker plugins; configured pipeline to connect to GitHub via SSH.
@@ -49,7 +44,7 @@ GitHub Repo --> Jenkins Pipeline --> Docker Build --> ECR Repository  --> ECS Fa
 5.	Testing: Pipeline build verification and app accessibility checks.
 
 
-**Challenges & Solutions**
+_**Challenges & Solutions**_
 
 Challenge	 -  Solution
 * Permission denied for Docker socket  - 	Ran Jenkins as user in Docker group and used sudo.
@@ -58,7 +53,7 @@ Challenge	 -  Solution
 * Build failing in Jenkins  -	 Verified Dockerfile syntax, environment variables, and user permissions.
 
 
-**Output / Screenshots**
+_**Output / Screenshots**_
 
 •	Jenkins Pipeline 
 
