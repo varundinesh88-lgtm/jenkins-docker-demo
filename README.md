@@ -37,7 +37,7 @@ _**Pipeline Stages**_
 
 _**Key Implementation Steps**_
 
-1.	EC2 Setup: Launch Jenkins EC2 instance (t3.micro,), installed Jenkins and Docker, configured security groups.
+1.	EC2 Setup: Launch Jenkins EC2 instance (t3.micro), installed Jenkins and Docker, configured security groups.
 2.	Jenkins Setup: Installed Git, Pipeline, Docker plugins; configured pipeline to connect to GitHub via SSH.
 3.	GitHub Integration: Added SSH key, configured webhook to trigger Jenkins pipeline.
 4.	Docker & ECS: Dockerfile created, image built by Jenkins, pushed to ECR, deployed via Fargate.
