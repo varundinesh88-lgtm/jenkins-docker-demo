@@ -61,8 +61,11 @@ Build failing in Jenkins  -	 Verified Dockerfile syntax, environment variables, 
 **Output / Screenshots**
 
 •	Jenkins Pipeline 
+Console Output:
 <img width="1920" height="1080" alt="Capture1" src="https://github.com/user-attachments/assets/e02a2f0f-b77d-4249-bcf2-70b6fe1ba9c8" />
+Pipeline Overview:
 <img width="1920" height="1080" alt="8" src="https://github.com/user-attachments/assets/5c4c5bb5-95c5-430e-80b8-4f2ad1b41eb8" />
+Pipeline Output:
 <img width="1920" height="1080" alt="Jenkins1" src="https://github.com/user-attachments/assets/cc8f7929-ca7f-43e5-9958-edc2d70fb259" />
 
 •	Docker image listed in ECR
