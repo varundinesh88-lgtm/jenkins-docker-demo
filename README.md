@@ -1,5 +1,5 @@
-# jenkins-docker-demo
-***jenkins-docker-demo***
+# Project 1 - jenkins-docker
+***jenkins-docker***
 
 
 **Overview**
