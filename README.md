@@ -1,2 +1,52 @@
 # jenkins-docker-demo
 jenkins-docker-demo
+
+**Overview**
+Objective: Automate build, test, and deployment of a sample application using Jenkins, Docker, AWS ECR, and ECS Fargate. Skills Demonstrated: CI/CD, Docker, AWS (ECR, ECS Fargate), GitHub integration, automation scripting.
+
+**Architecture Diagram**
+GitHub Repo --> Jenkins Pipeline --> Docker Build --> ECR Repository  --> ECS Fargate Task --> Public App Endpoint
+•	Jenkins automatically triggers on GitHub push via webhook.
+•	Docker image is built and pushed to AWS ECR.
+•	ECS Fargate pulls the image and runs the container.
+•	App is publicly accessible on assigned port.
+
+**Tools & Services Used**
+•	Jenkins – CI/CD automation server
+
+•	Docker – Containerization of the app
+
+•	GitHub – Source control and webhook trigger
+
+•	AWS ECR – Docker image registry
+
+•	AWS ECS Fargate – Serverless container deployment
+
+•	AWS CLI – Command-line operations for AWS resources
+
+**Pipeline Stages**
+Stage 1 – Checkout Code: Pull code from GitHub repository using SSH key.
+Stage 2 – Build Docker Image: Build Docker container from Dockerfile.
+Stage 3 – Push to AWS ECR: Authenticate and push Docker image.
+Stage 4 – Deploy to ECS Fargate: ECS Task Definition configured and service started.
+Stage 5 – Test: Verify app is reachable and serving correct content.
+
+**Key Implementation Steps**
+1.	EC2 Setup: Launch Jenkins EC2 instance (t3.micro, free tier), installed Jenkins and Docker, configured security groups.
+2.	Jenkins Setup: Installed Git, Pipeline, Docker plugins; configured pipeline to connect to GitHub via SSH.
+3.	GitHub Integration: Added SSH key, configured webhook to trigger Jenkins pipeline.
+4.	Docker & ECS: Dockerfile created, image built by Jenkins, pushed to ECR, deployed via Fargate.
+5.	Testing: Pipeline build verification and app accessibility checks.
+
+**Challenges & Solutions**
+Challenge	Solution
+Permission denied for Docker socket. -	Ran Jenkins as user in Docker group and used sudo.
+GitHub access issues. - 	Used SSH method. SSH key added to GitHub and Jenkins credentials.
+Webhook not triggering. -	 Corrected webhook URL and Jenkins GitHub plugin configuration.
+Build failing in Jenkins. -	 Verified Dockerfile syntax, environment variables, and user permissions.
+
+**Output / Screenshots**
+<img width="1920" height="1080" alt="Capture1" src="https://github.com/user-attachments/assets/e02a2f0f-b77d-4249-bcf2-70b6fe1ba9c8" />
+<img width="1920" height="1080" alt="8" src="https://github.com/user-attachments/assets/5c4c5bb5-95c5-430e-80b8-4f2ad1b41eb8" />
+<img width="1920" height="1080" alt="Jenkins1" src="https://github.com/user-attachments/assets/cc8f7929-ca7f-43e5-9958-edc2d70fb259" />
+
