@@ -1,5 +1,5 @@
-# Project 1 - jenkins-docker
-***jenkins-docker***
+# Project 1 - JENKINS-DOCKER
+***Jenkins-Docker***
 
 
 **Overview**
@@ -18,17 +18,17 @@ GitHub Repo --> Jenkins Pipeline --> Docker Build --> ECR Repository  --> ECS Fa
 
 **Tools & Services Used**
 
-•	Jenkins – CI/CD automation server
+•  Jenkins – CI/CD automation server
 
-•	Docker – Containerization of the app
+•  Docker – Containerization of the app
 
-•	GitHub – Source control and webhook trigger
+•  GitHub – Source control and webhook trigger
 
-•	AWS ECR – Docker image registry
+•  AWS ECR – Docker image registry
 
-•	AWS ECS Fargate – Serverless container deployment
+•  AWS ECS Fargate – Serverless container deployment
 
-•	AWS CLI – Command-line operations for AWS resources
+•  AWS CLI – Command-line operations for AWS resources
 
 
 **Pipeline Stages**
