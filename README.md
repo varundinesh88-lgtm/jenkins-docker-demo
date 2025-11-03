@@ -57,15 +57,15 @@ _**Output / Screenshots**_
 
 •	Jenkins Pipeline 
 
-  Console Output:
+   1 Console Output:
 
   <img width="1920" height="1080" alt="Capture1" src="https://github.com/user-attachments/assets/e02a2f0f-b77d-4249-bcf2-70b6fe1ba9c8" />
 
-  Pipeline Overview:
+   2 Pipeline Overview:
 
   <img width="1920" height="1080" alt="8" src="https://github.com/user-attachments/assets/5c4c5bb5-95c5-430e-80b8-4f2ad1b41eb8" />
 
-  Pipeline Output:
+   3 Pipeline Output:
 
   <img width="1920" height="1080" alt="Jenkins1" src="https://github.com/user-attachments/assets/cc8f7929-ca7f-43e5-9958-edc2d70fb259" />
 
@@ -82,11 +82,11 @@ _**Output / Screenshots**_
 
 •	App running in browser 
 
-  First Output:
+   1 First Output:
 
   <img width="1920" height="1080" alt="7" src="https://github.com/user-attachments/assets/4efc9b77-0139-4e31-8c9c-1a1a2d504971" />
 
-  Output got through CI/CD Pipeline after pushing an update to github repo:
+   2 Output got through CI/CD Pipeline after pushing an update to github repo:
 
   <img width="1920" height="1080" alt="1" src="https://github.com/user-attachments/assets/7b638081-dfcc-4373-b90b-c369ec91e064" />
 
