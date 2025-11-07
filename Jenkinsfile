@@ -25,7 +25,13 @@ pipeline {
         stage('Run Container for Testing') {
             steps {
                 script {
-                    sh 'docker run -d --name jenkins-demo-app -p 8081:8080 jenkins-demo-app'
+                    sh '''
+                    echo "Cleaning up old containers..."
+                    docker rm -f jenkins-demo-app || true
+
+                    echo "Starting new test container..."
+                    docker run -d --name jenkins-demo-app -p 8081:8080 jenkins-demo-app
+                    '''
                 }
             }
         }
@@ -81,7 +87,7 @@ pipeline {
     post {
         always {
             sh '''
-            docker stop jenkins-demo-app || true
+            echo "Stopping and removing container..."
             docker rm -f jenkins-demo-app || true
             '''
         }
