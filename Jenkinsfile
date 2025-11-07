@@ -82,7 +82,7 @@ pipeline {
         always {
             sh '''
             docker stop jenkins-demo-app || true
-            docker rm jenkins-demo-app || true
+            docker rm -f jenkins-demo-app || true
             '''
         }
     }
