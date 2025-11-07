@@ -30,7 +30,7 @@ pipeline {
                     docker rm -f jenkins-demo-app || true
 
                     echo "Starting new test container..."
-                    docker run -d --name jenkins-demo-app -p 0:8080 jenkins-demo-app
+                    docker run -d --name jenkins-demo-app -p 8081:8080 jenkins-demo-app
                     '''
                 }
             }
