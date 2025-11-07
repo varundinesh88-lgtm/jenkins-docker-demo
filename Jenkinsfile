@@ -80,7 +80,10 @@ pipeline {
 
     post {
         always {
-            sh 'docker stop jenkins-demo-app || true && docker rm jenkins-demo-app || true'
+            sh '''
+            docker stop jenkins-demo-app || true
+            docker rm jenkins-demo-app || true
+            '''
         }
     }
 }
