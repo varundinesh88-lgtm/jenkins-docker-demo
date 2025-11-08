@@ -48,41 +48,32 @@ pipeline {
             }
         }
 
-        stage('Login to AWS ECR') {
+        stage('Login to AWS ECR and Push Image') {
             steps {
-                script {
+                withAWS(credentials: 'aws-creds', region: "${AWS_REGION}") {
                     sh '''
                     aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REPO
-                    '''
-                }
-            }
-        }
-
-        stage('Tag and Push Docker Image to ECR') {
-            steps {
-                script {
-                    sh '''
                     docker tag $IMAGE_NAME:latest $ECR_REPO:latest
                     docker push $ECR_REPO:latest
                     '''
                 }
             }
         }
+
         stage('Deploy to ECS Fargate') {
             steps {
-                script {
+                withAWS(credentials: 'aws-creds', region: "${AWS_REGION}") {
                     sh '''
-                     aws ecs update-service \
-                     --cluster jenkins-demo-cluster \
-                     --service jenkins-demo-service \
-                     --force-new-deployment \
-                     --region us-east-1
-                     '''
+                    aws ecs update-service \
+                        --cluster jenkins-demo-cluster \
+                        --service jenkins-demo-service \
+                        --force-new-deployment \
+                        --region $AWS_REGION
+                    '''
                 }
             }
         }
-
-   }
+    }
 
     post {
         always {
