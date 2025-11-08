@@ -5,6 +5,8 @@ pipeline {
         IMAGE_NAME = "jenkins-demo-app"
         AWS_REGION = "us-east-1"
         ECR_REPO = "829730167210.dkr.ecr.us-east-1.amazonaws.com/jenkins-demo-app"
+        CLUSTER_NAME = "jenkins-demo-cluster"
+        SERVICE_NAME = "jenkins-demo-service"
     }
 
     stages {
@@ -30,7 +32,7 @@ pipeline {
                     docker rm -f jenkins-demo-app || true
 
                     echo "Starting new test container..."
-                    docker run -d --name jenkins-demo-app -p 8081:8080 jenkins-demo-app
+                    docker run -d --name jenkins-demo-app -p 8081:8080 ${IMAGE_NAME}
                     '''
                 }
             }
@@ -42,19 +44,30 @@ pipeline {
                     sh '''
                     echo "Testing app endpoint..."
                     sleep 5
-                    curl -I http://localhost:8081
+                    curl -I http://localhost:8081 || exit 1
                     '''
                 }
             }
         }
 
-        stage('Login to AWS ECR and Push Image') {
+        stage('Login to AWS ECR') {
             steps {
                 script {
                     sh '''
+                    echo "Logging in to AWS ECR..."
                     aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REPO
-                    docker tag ${IMAGE_NAME}:latest ${ECR_REPO}:latest
-                    docker push ${ECR_REPO}:latest
+                    '''
+                }
+            }
+        }
+
+        stage('Tag and Push Docker Image to ECR') {
+            steps {
+                script {
+                    sh '''
+                    echo "Tagging and pushing image..."
+                    docker tag $IMAGE_NAME:latest $ECR_REPO:latest
+                    docker push $ECR_REPO:latest
                     '''
                 }
             }
@@ -63,11 +76,14 @@ pipeline {
         stage('Deploy to ECS Fargate') {
             steps {
                 script {
+                    sh """
+                    echo "Triggering ECS service update..."
                     aws ecs update-service \
-                        --cluster jenkins-demo-cluster \
-                        --service jenkins-demo-service \
+                        --cluster $CLUSTER_NAME \
+                        --service $SERVICE_NAME \
                         --force-new-deployment \
                         --region $AWS_REGION
+                    """
                 }
             }
         }
@@ -76,7 +92,7 @@ pipeline {
     post {
         always {
             sh '''
-            echo "Stopping and removing container..."
+            echo "Cleaning up test container..."
             docker rm -f jenkins-demo-app || true
             '''
         }
